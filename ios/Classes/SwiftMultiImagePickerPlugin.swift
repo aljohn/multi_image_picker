@@ -222,11 +222,11 @@ public class SwiftMultiImagePickerPlugin: NSObject, FlutterPlugin {
                     options: options,
                     resultHandler: {
                         (image: UIImage?, info) in
-                         if let originalImage = image {
-                             self.messenger.send(onChannel: "multi_image_picker/image/" + identifier + ".original", message: originalImage.jpegData(compressionQuality: CGFloat(compressionQuality)))
-                         } else {
-                             print("\(info)");
-                         }
+                        if image != nil {
+                            self.messenger.send(onChannel: "multi_image_picker/image/" + identifier + ".original", message: image!.jpegData(compressionQuality: CGFloat(compressionQuality)))
+                        } else {
+                            self.messenger.send(onChannel: "multi_image_picker/image/" + identifier + ".original", message: nil)
+                        }
                 })
 
                 if(PHInvalidImageRequestID != ID) {
